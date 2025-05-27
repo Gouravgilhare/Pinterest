@@ -1,0 +1,10 @@
+DATA ASSOCIATION 
+    -> Ek model ko dusre model ke data ko jod dena id ke through 
+    -> user ko post se link karna hai and post ko user se 
+
+
+/route -> login /signup
+/profile -> user ka profile page aur saved post dikhenge
+/feed -> user ke posts aur dusre users ke posts dikhenge
+click karne post open ho jayegi and like and save kar sakte hain 
+/board/: boardname poora board dikhega 
