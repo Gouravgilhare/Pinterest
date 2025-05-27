@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/Pintrest');
+const plm = require('passport-local-mongoose');
+mongoose.connect('mongodb://localhost:27017/Pinterest');
 
 const userSchema = new mongoose.Schema({
   username:{
@@ -9,7 +10,7 @@ const userSchema = new mongoose.Schema({
   },
   password :{
     type: String,
-    required: true
+    required: false
   },
   posts: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -28,5 +29,7 @@ const userSchema = new mongoose.Schema({
     required: true
   },
 })
+
+userSchema.plugin(plm);
 
 module.exports = mongoose.model("user", userSchema);
