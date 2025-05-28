@@ -27,6 +27,32 @@ body {
   align-items: center;
   justify-content: center;
 }
+.createLogout{
+  display: flex;
+  gap: 1rem;
+  }
+
+.createLogout  {
+  display: inline-block;
+  padding: 0.6rem 1.6rem;
+  border-radius: 1.6rem;
+  background-color: #4070f4;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.5rem;
+  transition: background 0.2s;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.createLogout:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.createLogout:hover {
+  background-color: #152551;
+}
+
 .profile-card::before {
   content: "";
   position: absolute;
@@ -35,11 +61,11 @@ body {
   height: 15rem;
   width: 100%;
   border-radius: 24px 24px 0 0;
-  background-color: #4070f4;
+  background-color: #E60023;
 }
 .profile-card .image {
   border-radius: 50%;
-  background-color: #4070f4;
+  background-color: #E60023;
   height: 15rem;
   margin-bottom: 2rem;
   padding: 0.3rem;

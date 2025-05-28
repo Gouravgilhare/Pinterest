@@ -5,7 +5,7 @@ const postModel = require('./posts');
 const passport = require('passport');
 const localStrategy = require('passport-local');
 passport.use(new localStrategy(userModel.authenticate())); 
-
+const upload = require('./multer'); 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -32,14 +32,22 @@ router.get('/alluserpost', async function(req, res, next) {
 
 
 router.get("/createpost", async function(req, res, next) {
-  const post = await postModel.create({
-    postText: "This is a test post 2 for Pintrest",  
-    user: "68359e317e997a3d9e97f1ef"
+  res.render('createpost', {error: req.flash('error')});
+});
+
+
+router.post('/createpost', async function(req, res, next) {
+  
+  const {description,image}= req.body;
+  if ( !description || !image) {
+    return res.status(400).send("All fields are required.");
+  }
+  const post = new postModel({
+    postText: description,
+    image: image
   })
-  let user = await userModel.findById("68359e317e997a3d9e97f1ef");
-  user.posts.push(post._id);
-  await user.save();
-  res.send(post);
+  post.save();
+  res.redirect('/profile');
 });
 
 router.post('/register', async function (req, res, next) {
@@ -72,14 +80,23 @@ function isLoggedIn(req, res, next) {
   res.redirect('/login');
 }
 
-router.get('/profile',  function(req, res, next) {
+router.get('/profile',isLoggedIn,  async function(req, res, next) {
 
-    res.render('profile');
+    const user = await userModel.findOne({username : req.session.passport.user});
+
+    res.render('profile',{username : user.username, fullname: user.fullname, email: user.email, dp: user.dp, posts: user.posts});
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('login' );
+  
+  res.render('login',{error: req.flash('error')} );
 });
+
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/profile',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
 
 router.get('/feed', function(req, res, next) {
   res.render('feed' );
@@ -91,4 +108,25 @@ router.get('/logout', function(req, res, next) {
     res.redirect('/login');
   });
 });
+
+
+
+router.get('/upload', function(req, res, next) {
+  res.render('upload', {error: req.flash('error')});
+});
+
+
+router.post('/upload', upload.single('file'),(req,res) => {
+  
+  if(!req.file){
+    return res.status(400).send("No file uploaded.");
+  }
+  // res.send("File uploaded successfully.");
+
+  res.redirect('/profile'  );
+});
+
 module.exports = router;
+
+
+

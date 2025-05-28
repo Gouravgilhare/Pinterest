@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create</title>
+    <link rel="stylesheet" href="/stylesheets/upload.css">
+  
+<!--FONT AWESOME-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<!--ICONIFY-->
+<script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
+
+<!--GOOGLE FONTS-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+<!--PLUGIN-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+$(function() {
+    const $fileInput = $('input[type="file"][name="file"]');
+    const $label = $fileInput.closest('label');
+    const $icon = $label.find('.fa-cloud-upload');
+    const $title = $label.find('h2.title');
+    const $desc = $label.find('p');
+    
+    $fileInput.on('change', function(e) {
+        const file = this.files && this.files[0];
+        if (!file) return;
+
+        if (!file.type.match('image.*')) {
+            alert('Please select an image file (png, jpg, jpeg).');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+            // Remove icon, title, and desc
+            $icon.hide();
+            $title.hide();
+            $desc.hide();
+
+            // Remove any previous preview
+            $label.find('.img-preview').remove();
+
+            // Add image preview
+            const img = $('<img class="img-preview" style="max-width:100%;max-height:180px;display:block;margin:auto;border-radius:12px;box-shadow:0 2px 8px rgba(70,194,243,0.12);" />');
+            img.attr('src', evt.target.result);
+            $label.append(img);
+        };
+        reader.readAsDataURL(file);
+    });
+});
+</script>
+</head> 
+<body>
+
+<form class="dragger padding_2x" action ="/upload" method= "post" enctype= "multipart/form-data">
+
+    <h1 class="title" style="font-size:2.5rem; font-weight:700; color:#46c2f3; margin-bottom:1rem; letter-spacing:1px;">Create a Post</h1>
+    <label for="description" style="font-size:1.1rem; color:#333; margin-bottom:0.5rem; display:block;">Description :</label>
+    <input 
+        type="text" 
+        id="description" 
+        name="description" 
+        placeholder="Write something about your post..." 
+        class="input_text" 
+        required 
+        style="width:100%; padding:0.75rem 1rem; border:1.5px solid #46c2f3; border-radius:8px; font-size:1rem; margin-bottom:1.5rem; background:#fff8fa; transition:border 0.2s;"
+        onfocus="this.style.borderColor='#ad081b';"
+        onblur="this.style.borderColor='#e60023';"
+    />
+    <label class="fixed_flex padding_3x">
+        <i class="fa fa-cloud-upload"></i>
+        <h2 class="title">Drag & Drop<br>or <em>Upload</em></h2>
+        <p>Accepted png, jpg, jpeg</p>
+        <input type="file" name="file" accept=".png,.jpg,.jpeg" multiple={false} />
+    </label>
+    
+    <ul class="file_preview"></ul>
+     <button 
+        type="submit" 
+        class="btn btn_primary"
+        style="
+            background: linear-gradient(90deg, #46c2f3 0%, #46c2f3 100%);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 0.75rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(70,194,243,0.15);
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 1.5rem;
+            letter-spacing: 1px;
+            text-align: center;
+        "
+        onmouseover="this.style.background='linear-gradient(90deg, #ad081b 0%, #46c2f3 100%)'; this.style.transform='translateY(-2px) scale(1.03)';"
+        onmouseout="this.style.background='linear-gradient(90deg, #46c2f3 0%, #ad081b 100%)'; this.style.transform='none';"
+    >
+        <i class="fa fa-paper-plane" style="margin-right: 8px;"></i>
+        Create Post
+    </button>
+</form>
+
+  
+  
+
+</body>
+</html>

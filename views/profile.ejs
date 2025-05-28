@@ -13,11 +13,12 @@
 <body>
     <section class="profile-card">
         <div class="image">
-            <img src="https://preview.keenthemes.com/metronic-v4/theme_rtl/assets/pages/media/profile/profile_user.jpg" alt="user image">
+            <img src="<%= dp %>" alt="user image" onerror="this.onerror=null; this.src='./images/1.png'" >
         </div>
         <div class="text-data">
-            <h2>Brent Rivera</h2>
-            <p>YouTuber & Blogger</p>
+            <h2><%= fullname %></h2>
+            <p><%= username %></p>
+            <p><%= email %></p>
         </div>
         <div class="media-icons">
             <a href="#" style="background-color: #ff0000;">
@@ -34,13 +35,14 @@
             </a>
         </div>
         <div class="buttons">
-            <button>Subscribe</button>
-            <button>Message</button>
+            <a href="/upload" class = "createLogout">Create</a>
+            <a href="/logout" class = "createLogout">Logout</a>
         </div>
+
         <div class="analytics">
             <div class="data">
                 <i class="fa-solid fa-heart"></i>
-                <p>60K</p>
+                <p><%= posts.length %>K</p>
             </div>
             <div class="data">
                 <i class="fa-regular fa-comment"></i>
