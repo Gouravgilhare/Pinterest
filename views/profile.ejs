@@ -13,7 +13,7 @@
 <section class="profile-card">
     <div class="top-section">
         <div class="image">
-            <img src="<%= user.dp %>" alt="user image" onerror="this.onerror=null; this.src='./images/1.png'">
+            <img src="<%= user.dp %>" alt="user image" onerror="this.onerror=null; this.src='./images/11539820.png'">
         </div>
         <div class="text-info">
             <div class="text-data">
@@ -57,7 +57,11 @@
         <% user.posts.forEach(function(post){ %>
             <div class="card">
                 <img src="/images/uploads/<%= post.image %>" alt="post image">
-                <p class="post-text"><%= post.postText %></p>
+                <div class="post-likes">
+                    <p class="post-text"><%= post.postText %></p>
+                    <p><%= post.likes %></p>
+                    <i class="fa-solid fa-heart"></i>
+                </div>
             </div>
         <% }) %>
     </div>
